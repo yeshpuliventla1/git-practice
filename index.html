@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Display Name</title>
+	<style>
+		:root{
+			--bg:#eaf2ff;
+			--primary:#1e63d6;
+			--primary-contrast:#ffffff;
+			--card:#ffffff;
+		}
+		body{
+			margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--bg),#d7eaff);
+			font-family:Segoe UI, Roboto, Arial, sans-serif;color:#08306b;
+		}
+		.card{
+			background:var(--card);padding:32px;border-radius:12px;box-shadow:0 6px 22px rgba(30,99,214,0.12);text-align:center;max-width:360px;width:90%;
+		}
+		h1{margin:0 0 12px;font-size:20px;color:var(--primary)}
+		#nameDisplay{margin:18px 0;font-size:18px;color:#08306b;min-height:24px}
+		button{
+			background:var(--primary);color:var(--primary-contrast);border:0;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:15px;
+		}
+		button:active{transform:translateY(1px)}
+	</style>
+</head>
+<body>
+	<div class="card">
+		<h1>Click the button</h1>
+		<div id="nameDisplay" aria-live="polite"></div>
+		<button id="showName">Show my name</button>
+		<p style="margin-top:12px;"><a href="dependencies.html">Know about Github commands</a></p>
+	</div>
+
+	<script>
+		// Replace the name value below with your name if desired
+		const myName = 'Puliventla Yeshwanth Kumar';
+		document.getElementById('showName').addEventListener('click', () => {
+			document.getElementById('nameDisplay').textContent = myName;
+		});
+	</script>
+</body>
+</html>
