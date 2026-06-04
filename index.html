@@ -43,6 +43,14 @@ body{
     overflow:hidden;
 }
 
+#quoteBox{
+    margin-top:15px;
+    padding:10px;
+    border-radius:8px;
+    background:#eef6ff;
+    min-height:40px;
+}
+
 .background span{
     position:absolute;
     width:25px;
@@ -187,6 +195,14 @@ button:hover{
 
 <div id="nameDisplay"></div>
 
+<div id="quoteBox">
+    Click below for a DevOps quote
+</div>
+
+<button id="showQuote">
+    Show DevOps Quote
+</button>
+
 <div class="counter">
     Total Clicks:
     <span id="clickCount">0</span>
@@ -244,6 +260,24 @@ document.getElementById("themeBtn").addEventListener("click", () => {
     else{
         btn.textContent = "🌙 Dark Mode";
     }
+});
+
+const quotes = [
+    "Automate everything.",
+    "Infrastructure as Code.",
+    "Monitor before users complain.",
+    "CI/CD saves time.",
+    "Containers everywhere."
+];
+
+document.getElementById("showQuote")
+.addEventListener("click", () => {
+
+    const random =
+        Math.floor(Math.random() * quotes.length);
+
+    document.getElementById("quoteBox")
+        .textContent = quotes[random];
 });
 
 </script>
