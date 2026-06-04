@@ -1,45 +1,252 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Display Name</title>
-	<style>
-		:root{
-			--bg:#eaf2ff;
-			--primary:#28a745;
-			--primary-contrast:#ffffff;
-			--card:#ffffff;
-		}
-		body{
-			margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--bg),#d7eaff);
-			font-family:Segoe UI, Roboto, Arial, sans-serif;color:#08306b;
-		}
-		.card{
-			background:var(--card);padding:32px;border-radius:12px;box-shadow:0 6px 22px rgba(30,99,214,0.12);text-align:center;max-width:360px;width:90%;
-		}
-		h1{margin:0 0 12px;font-size:20px;color:var(--primary)}
-		#nameDisplay{margin:18px 0;font-size:18px;color:#08306b;min-height:24px}
-		button{
-			background:var(--primary);color:var(--primary-contrast);border:0;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:15px;
-		}
-		button:active{transform:translateY(1px)}
-	</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Display Name</title>
+
+<style>
+:root{
+    --bg:#eaf2ff;
+    --primary:#28a745;
+    --primary-contrast:#ffffff;
+    --card:#ffffff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg,var(--bg),#d7eaff);
+    font-family:Segoe UI, Roboto, Arial, sans-serif;
+    color:#08306b;
+    overflow:hidden;
+    transition:0.4s;
+}
+
+/* Floating Background */
+.background{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+    overflow:hidden;
+}
+
+.background span{
+    position:absolute;
+    width:25px;
+    height:25px;
+    background:rgba(40,167,69,0.2);
+    border-radius:50%;
+    animation:float 15s linear infinite;
+}
+
+.background span:nth-child(1){
+    left:10%;
+    animation-duration:12s;
+}
+
+.background span:nth-child(2){
+    left:30%;
+    animation-duration:18s;
+}
+
+.background span:nth-child(3){
+    left:50%;
+    animation-duration:10s;
+}
+
+.background span:nth-child(4){
+    left:70%;
+    animation-duration:14s;
+}
+
+.background span:nth-child(5){
+    left:90%;
+    animation-duration:20s;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh) scale(0);
+    }
+    to{
+        transform:translateY(-100px) scale(1.5);
+    }
+}
+
+/* Card */
+.card{
+    background:var(--card);
+    padding:32px;
+    border-radius:16px;
+    box-shadow:0 8px 25px rgba(30,99,214,0.15);
+    text-align:center;
+    width:90%;
+    max-width:420px;
+}
+
+h1{
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+#clock{
+    margin-bottom:15px;
+    font-size:18px;
+    font-weight:bold;
+    color:#1e63d6;
+}
+
+#nameDisplay{
+    margin:20px 0;
+    font-size:20px;
+    min-height:30px;
+}
+
+button{
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    margin:5px;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.counter{
+    margin-top:15px;
+    font-weight:bold;
+}
+
+.link{
+    margin-top:15px;
+}
+
+.link a{
+    text-decoration:none;
+    color:#1e63d6;
+    font-weight:bold;
+}
+
+/* Dark Mode */
+.dark{
+    background:#121212;
+    color:white;
+}
+
+.dark .card{
+    background:#1e1e1e;
+    color:white;
+}
+
+.dark #clock{
+    color:#6ea8fe;
+}
+</style>
+
 </head>
 <body>
-	<div class="card">
-		<h1>Click the button</h1>
-		<div id="nameDisplay" aria-live="polite"></div>
-		<button id="showName">Show my name</button>
-		<p style="margin-top:12px;"><a href="dependencies.html">Know about Github commands</a></p>
-	</div>
 
-	<script>
-		// Replace the name value below with your name if desired
-		const myName = 'Puliventla Yeshwanth Kumar';
-		document.getElementById('showName').addEventListener('click', () => {
-			document.getElementById('nameDisplay').textContent = myName;
-		});
-	</script>
+<div class="background">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="card">
+
+```
+<h1>Welcome</h1>
+
+<div id="clock"></div>
+
+<button id="themeBtn">🌙 Dark Mode</button>
+
+<br><br>
+
+<button id="showName">Show My Name</button>
+
+<div id="nameDisplay"></div>
+
+<div class="counter">
+    Total Clicks:
+    <span id="clickCount">0</span>
+</div>
+
+<div class="link">
+    <a href="dependencies.html">
+        Know About Git & GitHub Commands
+    </a>
+</div>
+```
+
+</div>
+
+<script>
+
+const myName = "Puliventla Yeshwanth Kumar";
+
+let count = 0;
+
+document.getElementById("showName").addEventListener("click", () => {
+
+    document.getElementById("nameDisplay").textContent = myName;
+
+    count++;
+
+    document.getElementById("clickCount").textContent = count;
+});
+
+/* Live Clock */
+
+function updateClock(){
+
+    const now = new Date();
+
+    document.getElementById("clock").textContent =
+        now.toLocaleTimeString();
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+/* Dark Mode */
+
+document.getElementById("themeBtn").addEventListener("click", () => {
+
+    document.body.classList.toggle("dark");
+
+    const btn = document.getElementById("themeBtn");
+
+    if(document.body.classList.contains("dark")){
+        btn.textContent = "☀️ Light Mode";
+    }
+    else{
+        btn.textContent = "🌙 Dark Mode";
+    }
+});
+
+</script>
+
 </body>
 </html>
