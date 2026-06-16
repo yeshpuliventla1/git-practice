@@ -6,6 +6,7 @@ pipeline {
                 echo 'Source Downloaded'
             }
         }
+        
         stage('Environment Info') {
             steps {
                 sh '''
@@ -13,6 +14,13 @@ pipeline {
                 pwd
                 ls -ltr
                 '''
+            }
+        }
+
+        stage('Build Validation') {
+            steps {
+                sh 'chmod +x tests/test.sh'
+                sh './tests/test.sh'
             }
         }
 
@@ -46,13 +54,6 @@ pipeline {
                 ls -ltr build
                 '''
             }
-        }
-
-        stage('Build Validation') {
-            steps {
-                sh 'chmod +x tests/test.sh'
-                sh './tests/test.sh'
-            }
-        }
+        }    
     }
 }
