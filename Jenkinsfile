@@ -9,9 +9,11 @@ pipeline {
         }
         stage('Environment Info') {
             steps {
-                sh 'whoami'
-                sh 'pwd'
-                sh 'ls -ltr'
+                sh '''
+                whoami
+                pwd
+                ls -ltr
+                '''
             }
         }
         stage('Build Validation') {
