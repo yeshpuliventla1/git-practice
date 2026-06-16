@@ -34,7 +34,7 @@ pipeline {
             }
         }    
 
-        stage{'Artifact Creation'} {
+        stage('Artifact Creation') {
             steps {
                 sh '''
                 mkdir -p build
