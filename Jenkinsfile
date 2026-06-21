@@ -1,59 +1,50 @@
 pipeline {
     agent any
+
     stages {
+
         stage('Checkout') {
             steps {
-                echo 'Source Downloaded'
+                echo 'Getting code from GitHub'
             }
         }
-        
-        stage('Environment Info') {
+
+        stage('Validate Files') {
             steps {
                 sh '''
-                whoami
-                pwd
-                ls -ltr
+                test -f index.html
+                test -f dependencies.html
                 '''
             }
         }
 
-        stage('Build Validation') {
-            steps {
-                sh 'chmod +x tests/test.sh'
-                sh './tests/test.sh'
-            }
-        }
-
-        stage('Build Info') {
-            steps {
-                sh '''
-                echo "Build Number: $BUILD_NUMBER" > build_info.txt
-
-                echo "Job Name: $JOB_NAME" >> build_info.txt
-
-                echo "Workspace: $WORKSPACE" >> build_info.txt
-
-                echo "Build Date:" >> build_info.txt
-
-                date >> build_info.txt
-
-                cat build_info.txt
-                '''
-            }
-        }    
-
-        stage('Artifact Creation') {
+        stage('Build Website') {
             steps {
                 sh '''
                 mkdir -p build
 
                 cp index.html build/
                 cp dependencies.html build/
-                cp build_info.txt build/
 
+                echo "Build Number: ${BUILD_NUMBER}" > build/build_info.txt
+                echo "Job Name: ${JOB_NAME}" >> build/build_info.txt
+                date >> build/build_info.txt
+                '''
+            }
+        }
+
+        stage('Verify Build') {
+            steps {
+                sh '''
                 ls -ltr build
                 '''
             }
-        }    
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: 'build/*'
+        }
     }
 }
